@@ -9,7 +9,6 @@ import time
 from datetime import datetime, timedelta, date
 from tkinter.filedialog import askopenfilename
 
-
 def copySheet(readbook, writebook, targetFile):
     """
     复制sheet中的某些列
@@ -152,7 +151,7 @@ if __name__ == '__main__':
             sheet1.write(i + 1, 10, 'No Product')
             sheet1.write(i + 1, 11, 'No Product')
 
-    # 在原始数据的拷贝上添加辅助编号--------------------------------------------------------------------------------------
+    # 在原始数据的拷贝上添加辅助编号-----------------------------------------------------------------------------------
     ws0 = wb.get_sheet(0)
     for i in range(len(indexList)):
         ws0.write(indexList[i], 32, idList[i])  # Part No
@@ -187,8 +186,6 @@ if __name__ == '__main__':
                 ws0.write(indexListJiaoqi[i], 12, 'No Date')
                 ws0.write(indexListJiaoqi[i], 14, 'No Date')
                 ws0.write(indexListJiaoqi[i], 15, 'No Date')
-
-
         except Exception as e:
             # pass
             # print(i,indexListJiaoqi[i])
@@ -197,33 +194,10 @@ if __name__ == '__main__':
             ws0.write(indexListJiaoqi[i], 12, 'No Product')
             ws0.write(indexListJiaoqi[i], 14, 'No Product')
             ws0.write(indexListJiaoqi[i], 15, 'No Product')
-
-            # ws0.write(indexListJiaoqi[i], 12, '#N/A')
         for i in range(len(shipmentDate)):
             ws0.write(indexListShipmentDate[i], 12, time_tmp, style)  # 发货时间
             ws0.write(indexListShipmentDate[i], 14, shipmentDate[i])  # 发货时间
             ws0.write(indexListShipmentDate[i], 15, time_tmp, style)  # 发货时间
-
-
-    # for i in range(len(indexList)):
-    #     if table1.row_values(indexList[i])[5] == "X" and idList[i] not in idList2 :
-    #         print(i)
-    #         ws0.write(indexList[i], 12, '#N/A')
-    #         # ws0.write(indexList[i], 15, '#N/A')
-    #
-    #     else:
-    #         style = xlwt.XFStyle()
-    #         style.num_format_str = 'h:mm:ss'  # Other options: D-MMM-YY, D-MMM, MMM-YY, h:mm, h:mm:ss, h:mm, h:mm:ss, M/D/YY h:mm, mm:ss, [h]:mm:ss, mm:ss.0
-    #         # worksheet.write(0, 0, datetime.datetime.now(), style)
-    #         time_tmp = 0.5
-    #         ws0.write(indexList[i], 12, time_tmp, style)  # 发货时间
-    #         # ws0.write(indexList[i], 15, time_tmp, style)  # 发货时间
-    # # for i in range(len(indexList)):
-    # #     ws0.write(indexList[i], 14, '#N/A')
-
     wb.save(targetFile)
-
     end = time.clock()
     print("excel转换完成，用时：%f 秒" % (end - start))
-
-    #
