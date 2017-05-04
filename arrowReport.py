@@ -46,10 +46,11 @@ if __name__ == '__main__':
 
     # 复制原始数据-----------------------------------------------------------------------------------------------------------
     start = time.clock()
-    rb = xlrd.open_workbook('D:\\arrow\\originalData.xlsx')
-    # rb = xlrd.open_workbook(askopenfilename(filetypes=[('Excel file', '.xlsx')]))
+    # rb = xlrd.open_workbook('D:\\arrow\\originalData.xlsx')
+    rb = xlrd.open_workbook(askopenfilename(filetypes=[('Excel file', '.xlsx')]))
     book = xlwt.Workbook()
-    targetFile = 'D:\\arrow\\reportNew1.xls'
+    # targetFile = 'D:\\arrow\\reportNew1.xls'
+    targetFile = 'reportNew2.xls'
     copySheet(rb, book, targetFile)
 
     # 记录原始数据的sheet以及行和列
@@ -125,28 +126,31 @@ if __name__ == '__main__':
     sheet1.write(0, 11, 'Line')
 
     for i in range(len(indexListChuhuo)):
-        sheet1.write(i + 1, 0, idList[i])  # CPN
+        sheet1.write(i + 1, 0, idList[indexListChuhuo[i]-dataStart1])  # CPN
         sheet1.write(i + 1, 1, table1.cell(indexListChuhuo[i], 8).value)  # CPN
         sheet1.write(i + 1, 4, table1.cell(indexListChuhuo[i], 2).value)  # Item No.
         sheet1.write(i + 1, 5, table1.cell(indexListChuhuo[i], 9).value)  # Quantity( PCS)
 
     for i in range(len(indexListChuhuo)):
         try:
-            row = indexList2[idList2.index(idList[indexListChuhuo[i]])]
+            row = indexList2[idList2.index(idList[indexListChuhuo[i]-dataStart1])]
             sheet1.write(i + 1, 2, table2.cell(row, 8).value)  # Part No
             sheet1.write(i + 1, 3, table2.cell(row, 4).value)  # Customer P/O No
             sheet1.write(i + 1, 6, table2.cell(row, 19).value)  # Unit Price(USD)
             sheet1.write(i + 1, 7, table2.cell(row, 20).value)  # Amount (USD)
             sheet1.write(i + 1, 10, table2.cell(row, 1).value)  # SO#
             sheet1.write(i + 1, 11, table2.cell(row, 2).value)  # Line
-        except:
+        except Exception as e:
             # pass
-            sheet1.write(i + 1, 2, '#N/A')
-            sheet1.write(i + 1, 3, '#N/A')
-            sheet1.write(i + 1, 6, '#N/A')
-            sheet1.write(i + 1, 7, '#N/A')
-            sheet1.write(i + 1, 10, '#N/A')
-            sheet1.write(i + 1, 11, '#N/A')
+
+            print(i)
+            print("Exception：",e)
+            sheet1.write(i + 1, 2, 'No Product')
+            sheet1.write(i + 1, 3, 'No Product')
+            sheet1.write(i + 1, 6, 'No Product')
+            sheet1.write(i + 1, 7, 'No Product')
+            sheet1.write(i + 1, 10, 'No Product')
+            sheet1.write(i + 1, 11, 'No Product')
 
     # 在原始数据的拷贝上添加辅助编号--------------------------------------------------------------------------------------
     ws0 = wb.get_sheet(0)
